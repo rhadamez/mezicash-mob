@@ -1,0 +1,5 @@
+{
+	"*.tsx": [
+		"yarn lint:fix"
+	]
+}

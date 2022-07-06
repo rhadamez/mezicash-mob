@@ -20,6 +20,9 @@
         "react",
         "@typescript-eslint"
     ],
+		"ignorePatterns": [
+			"node_modules"
+		],
     "rules": {
         "indent": [
             "error",
