@@ -12,7 +12,7 @@ export function Dashboard() {
 							<S.UserName>Rhadamez</S.UserName>
 						</S.User>
 					</S.UserInfo>
-					<S.Photo source={{ uri: 'https://github.com/rhadamez.png'}}/>
+					<S.Icon name='power' size={24} />
 				</S.UserWrapper>
 			</S.Header>
 		</S.Container>
