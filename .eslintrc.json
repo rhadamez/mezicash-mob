@@ -21,7 +21,10 @@
         "@typescript-eslint"
     ],
 		"ignorePatterns": [
-			"node_modules"
+			"node_modules",
+			"babel.config.js",
+			"commitlint.config.js",
+			"metro.config.js"
 		],
     "rules": {
         "indent": [
