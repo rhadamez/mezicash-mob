@@ -39,15 +39,18 @@ export const Photo = styled.Image`
 
 export const User = styled.View`
 	margin-left: 17px;
+	flex-direction: column;
 `
 
 export const UserGreeting = styled.Text`
 	color: ${({theme}) => theme.colors.shape};
 	font-size: ${RFValue(18)}px;
-	font-family: ${({theme}) => theme.fonts.bold};
+	font-family: ${({theme}) => theme.fonts.medium};
 `
 
 export const UserName = styled.Text`
+	color: ${({theme}) => theme.colors.shape};
+	font-size: ${RFValue(18)}px;
 	font-family: ${({theme}) => theme.fonts.bold};
 `
 
@@ -55,3 +58,12 @@ export const Icon = styled<any>(Feather)`
 	color: ${({theme}) => theme.colors.secondary};
 	font-size: ${RFValue(24)}px;
 ` as any
+
+
+export const HightlightCards = styled.ScrollView.attrs({
+	horizontal: true,
+	showsHorizontalScrollIndicator: false,
+	contentContainerStyle: {paddingHorizontal: 24}
+})`
+
+`

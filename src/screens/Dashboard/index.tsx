@@ -1,3 +1,4 @@
+import { HighlightCard } from '../../components/HighlightCard'
 import * as S from './styles'
 
 export function Dashboard() {
@@ -15,6 +16,11 @@ export function Dashboard() {
 					<S.Icon name='power' size={24} />
 				</S.UserWrapper>
 			</S.Header>
+			<S.HightlightCards>
+				<HighlightCard />
+				<HighlightCard />
+				<HighlightCard />
+			</S.HightlightCards>
 		</S.Container>
 	)
 }
