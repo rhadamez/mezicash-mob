@@ -6,6 +6,7 @@ import * as S from './styles'
 export function Dashboard() {
 	const data = [
 		{
+			type: 'positive',
 			title: 'Desenvolvimento de site',
 			amount: 'R$ 4.000,00',
 			date: '14/04/2020',
@@ -16,22 +17,24 @@ export function Dashboard() {
 		},
 
 		{
+			type: 'negative',
 			title: 'Pizza grande',
 			amount: 'R$ 85,00',
 			date: '607/05/2020',
 			category: { 
 				name: 'Compras',
-				icon: 'dollar-sign'
+				icon: 'coffee'
 			}
 		},
 
 		{
-			title: 'Desenvolvimento de site',
-			amount: 'R$ 4.000,00',
+			positive: 'negative',
+			title: 'Aluguel do apartamento',
+			amount: 'R$ 1.000,00',
 			date: '14/04/2020',
 			category: { 
-				name: 'Vendas',
-				icon: 'dollar-sign'
+				name: 'Casa',
+				icon: 'shopping-bag'
 			}
 		}
 	]
