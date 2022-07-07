@@ -5,14 +5,16 @@ interface CategoryProps {
 	icon: string
 }
 
+export interface TransactionProps {
+	type: 'positive' | 'negative'
+	title: string
+	amount: string
+	category: CategoryProps
+	date: string
+}
+
 interface TransactionCardProps {
-	data: {
-		type: 'positive' | 'negative'
-		title: string
-		amount: string
-		category: CategoryProps
-		date: string
-	}
+	data: TransactionProps
 }
 
 export function TransactionCard({ data }: TransactionCardProps) {
