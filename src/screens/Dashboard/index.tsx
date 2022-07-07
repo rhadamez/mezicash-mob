@@ -1,9 +1,42 @@
+import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard } from '../../components/TransactionCard'
 import * as S from './styles'
 
 export function Dashboard() {
-	return(
+	const data = [
+		{
+			title: 'Desenvolvimento de site',
+			amount: 'R$ 4.000,00',
+			date: '14/04/2020',
+			category: { 
+				name: 'Vendas',
+				icon: 'dollar-sign'
+			}
+		},
+
+		{
+			title: 'Pizza grande',
+			amount: 'R$ 85,00',
+			date: '607/05/2020',
+			category: { 
+				name: 'Compras',
+				icon: 'dollar-sign'
+			}
+		},
+
+		{
+			title: 'Desenvolvimento de site',
+			amount: 'R$ 4.000,00',
+			date: '14/04/2020',
+			category: { 
+				name: 'Vendas',
+				icon: 'dollar-sign'
+			}
+		}
+	]
+
+	return (
 		<S.Container>
 			<S.Header>
 				<S.UserWrapper>
@@ -21,22 +54,31 @@ export function Dashboard() {
 				<HighlightCard
 					type='up'
 					title='Entradas'
-					amount='R$ 17.400,00'
+					amount='R$ 49.400,00'
 					lastTransaction='Última entrada dia 13 de abril' />
 				<HighlightCard
 					type='down'
 					title='Saídas'
-					amount='R$ 17.400,00'
+					amount='R$ 12.000,00'
 					lastTransaction='Última entrada dia 06 de junho' />
 				<HighlightCard
 					type='total'
 					title='Total'
-					amount='R$ 12.400,00'
+					amount='R$ 37.400,00'
 					lastTransaction='de 01 de abril à 06 de junho' />
 			</S.HightlightCards>
 			<S.Transactions>
 				<S.Title>Listagem</S.Title>
-				<TransactionCard />
+				<S.TransactionList
+					data={data}
+					renderItem={({ item }) => (
+						<TransactionCard data={item} />
+					)}
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{
+						paddingBottom: getBottomSpace()
+					}}
+				/>
 			</S.Transactions>
 		</S.Container>
 	)
