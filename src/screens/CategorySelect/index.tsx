@@ -9,19 +9,19 @@ interface Category {
 }
 
 interface Props {
-	category: string
+	category: Category
 	setCategory: (item: Category) => void
 	closeSelectCategory: () => void
 }
 
 export function CategorySelect({
-	category = 'Categoria',
+	category,
 	setCategory,
 	closeSelectCategory }: Props) {
 	return (
 		<S.Container>
 			<S.Header>
-				<S.Title>{category}</S.Title>
+				<S.Title>{category.name}</S.Title>
 			</S.Header>
 
 			<FlatList
@@ -29,7 +29,7 @@ export function CategorySelect({
 				style={{ flex: 1, width: '100%' }}
 				keyExtractor={item => item.key}
 				renderItem={({ item }) => (
-					<S.Category>
+					<S.Category onPress={() => setCategory(item)}>
 						<S.Icon name={item.icon} />
 						<S.Name>{item.name}</S.Name>
 					</S.Category>
@@ -38,7 +38,7 @@ export function CategorySelect({
 			/>
 
 			<S.Footer>
-				<Button title='Selecionar' />
+				<Button title='Selecionar' onPress={closeSelectCategory} />
 			</S.Footer>
 
 		</S.Container>

@@ -25,7 +25,7 @@ export const Title = styled.Text`
 	color: ${({ theme }) => theme.colors.shape};
 `
 
-export const Category = styled.View`
+export const Category = styled.TouchableOpacity`
 	width: 100%;
 	padding: ${RFValue(15)}px;
 	flex-direction: row;
