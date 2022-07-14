@@ -1,4 +1,5 @@
 import { FlatList } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Button } from '../../components/Form/Button'
 import { categories } from '../../utils/categories'
 import * as S from './styles'
@@ -37,9 +38,11 @@ export function CategorySelect({
 				ItemSeparatorComponent={() => <S.Separator />}
 			/>
 
-			<S.Footer>
-				<Button title='Selecionar' onPress={closeSelectCategory} />
-			</S.Footer>
+			<GestureHandlerRootView>
+				<S.Footer>
+					<Button title='Selecionar' onPress={() => closeSelectCategory()} />
+				</S.Footer>
+			</GestureHandlerRootView>
 
 		</S.Container>
 	)

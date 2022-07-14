@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ThemeProvider } from 'styled-components'
 import * as Font from 'expo-font'
 
@@ -37,7 +38,9 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Register />
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<Register />
+			</GestureHandlerRootView>
 		</ThemeProvider>
 	)
 }
