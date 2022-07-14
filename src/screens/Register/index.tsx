@@ -62,7 +62,7 @@ export function Register() {
 			<S.Form>
 				<S.Fields>
 					<InputForm
-						name='nome'
+						name='name'
 						control={control}
 						error={errors.name?.message}
 						autoCapitalize='sentences'
