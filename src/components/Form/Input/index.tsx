@@ -9,3 +9,4 @@ export function Input({ ...rest }: Props) {
 		<S.Container {...rest} />
 	)
 }
+

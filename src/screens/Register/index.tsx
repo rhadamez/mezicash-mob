@@ -1,14 +1,21 @@
 import { useState } from 'react'
 import { Modal } from 'react-native'
 
+import { useForm, FieldValues } from 'react-hook-form'
+
 import { Button } from '../../components/Form/Button'
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton'
-import { Input } from '../../components/Form/Input'
+import { InputForm } from '../../components/Form/InputForm'
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton'
 import { CategorySelect } from '../CategorySelect'
 import * as S from './styles'
 
 type TransactionType = 'up' | 'down'
+
+interface FormData {
+	name: string
+	amount: string
+}
 
 export function Register() {
 	const [categoryModalOpen, setCategoryModalOpen] = useState(false)
@@ -18,6 +25,8 @@ export function Register() {
 		key: 'category',
 		name: 'Categoria'
 	})
+
+	const { control, handleSubmit, formState: { errors } } = useForm()
 
 	function handleTransactionTypeSelect(type: TransactionType) {
 		setTransactionType(type)
@@ -31,6 +40,10 @@ export function Register() {
 		setCategoryModalOpen(false)
 	}
 
+	function handleRegister(form: FormData | FieldValues) {
+		console.log(form)
+	}
+
 	return (
 		<S.Container>
 			<S.Header>
@@ -39,8 +52,8 @@ export function Register() {
 
 			<S.Form>
 				<S.Fields>
-					<Input placeholder='Nome' />
-					<Input placeholder='Preço' />
+					<InputForm name='nome' control={control} placeholder='Nome' />
+					<InputForm name='amount' control={control} placeholder='Preço' />
 					<S.TransactionTypes>
 						<TransactionTypeButton
 							title='Income'
@@ -55,7 +68,7 @@ export function Register() {
 					</S.TransactionTypes>
 					<CategorySelectButton onPress={handleOpenSelectCategoryModal} title={category.name} />
 				</S.Fields>
-				<Button title='Enviar' />
+				<Button title='Enviar' onPress={handleSubmit(handleRegister)} />
 			</S.Form>
 
 			<Modal visible={categoryModalOpen}>
