@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { ThemeProvider } from 'styled-components'
 import * as Font from 'expo-font'
 
-import { 
+import {
 	Poppins_400Regular,
 	Poppins_500Medium,
 	Poppins_700Bold
@@ -12,6 +12,7 @@ import {
 import theme from './src/global/styles/theme'
 import { Dashboard } from './src/screens/Dashboard'
 import { Register } from './src/screens/Register'
+import { CategorySelect } from './src/screens/CategorySelect'
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
@@ -24,7 +25,7 @@ export default function App() {
 					Poppins_500Medium,
 					Poppins_700Bold
 				})
-			} catch(e) {
+			} catch (e) {
 				console.warn(e)
 			} finally {
 				setAppIsReady(true)
@@ -38,7 +39,7 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Register />
+			<CategorySelect />
 		</ThemeProvider>
 	)
 }
