@@ -14,7 +14,7 @@ export function Dashboard() {
 			title: 'Desenvolvimento de site',
 			amount: 'R$ 4.000,00',
 			date: '14/04/2020',
-			category: { 
+			category: {
 				name: 'Vendas',
 				icon: 'dollar-sign'
 			}
@@ -25,7 +25,7 @@ export function Dashboard() {
 			title: 'Pizza grande',
 			amount: 'R$ 85,00',
 			date: '07/05/2020',
-			category: { 
+			category: {
 				name: 'Compras',
 				icon: 'coffee'
 			}
@@ -36,7 +36,7 @@ export function Dashboard() {
 			title: 'Aluguel do apartamento',
 			amount: 'R$ 1.000,00',
 			date: '14/04/2020',
-			category: { 
+			category: {
 				name: 'Casa',
 				icon: 'shopping-bag'
 			}
@@ -48,13 +48,15 @@ export function Dashboard() {
 			<S.Header>
 				<S.UserWrapper>
 					<S.UserInfo>
-						<S.Photo source={{ uri: 'https://github.com/rhadamez.png'}}/>
+						<S.Photo source={{ uri: 'https://github.com/rhadamez.png' }} />
 						<S.User>
 							<S.UserGreeting>Olá, </S.UserGreeting>
 							<S.UserName>Rhadamez</S.UserName>
 						</S.User>
 					</S.UserInfo>
-					<S.Icon name='power' size={24} />
+					<S.LogoutButton>
+						<S.Icon name='power' size={24} />
+					</S.LogoutButton>
 				</S.UserWrapper>
 			</S.Header>
 			<S.HightlightCards>

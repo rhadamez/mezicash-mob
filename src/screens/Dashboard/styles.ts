@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
 import { FlatList, FlatListProps } from 'react-native'
+import { BorderlessButton } from 'react-native-gesture-handler'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper'
 import { Feather } from '@expo/vector-icons'
@@ -8,7 +9,7 @@ import { DataListProps } from './'
 
 export const Container = styled.View`
 	flex: 1;
-	background-color: ${({theme}) => theme.colors.background};
+	background-color: ${({ theme }) => theme.colors.background};
 `
 
 export const Header = styled.View`
@@ -18,7 +19,7 @@ export const Header = styled.View`
 	justify-content: center;
 	align-items: flex-start;
 
-	background: ${({theme}) => theme.colors.primary};
+	background: ${({ theme }) => theme.colors.primary};
 `
 
 export const UserWrapper = styled.View`
@@ -49,19 +50,22 @@ export const User = styled.View`
 `
 
 export const UserGreeting = styled.Text`
-	color: ${({theme}) => theme.colors.shape};
+	color: ${({ theme }) => theme.colors.shape};
 	font-size: ${RFValue(18)}px;
-	font-family: ${({theme}) => theme.fonts.medium};
+	font-family: ${({ theme }) => theme.fonts.medium};
 `
 
 export const UserName = styled.Text`
-	color: ${({theme}) => theme.colors.shape};
+	color: ${({ theme }) => theme.colors.shape};
 	font-size: ${RFValue(18)}px;
-	font-family: ${({theme}) => theme.fonts.bold};
+	font-family: ${({ theme }) => theme.fonts.bold};
 `
 
+export const LogoutButton = styled<any>(BorderlessButton)`
+	padding: 10px;
+`
 export const Icon = styled<any>(Feather)`
-	color: ${({theme}) => theme.colors.secondary};
+	color: ${({ theme }) => theme.colors.secondary};
 	font-size: ${RFValue(24)}px;
 ` as any
 
@@ -69,7 +73,7 @@ export const Icon = styled<any>(Feather)`
 export const HightlightCards = styled.ScrollView.attrs({
 	horizontal: true,
 	showsHorizontalScrollIndicator: false,
-	contentContainerStyle: {paddingHorizontal: 24}
+	contentContainerStyle: { paddingHorizontal: 24 }
 })`
 	width: 100%;
 	position: absolute;
@@ -85,7 +89,7 @@ export const Transactions = styled.View`
 export const Title = styled.Text`
 	margin-bottom: 16px;
 
-	font-family: ${({theme}) => theme.fonts.regular};
+	font-family: ${({ theme }) => theme.fonts.regular};
 	font-size: ${RFValue(18)}px;
 `
 
