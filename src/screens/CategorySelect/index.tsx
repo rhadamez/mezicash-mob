@@ -30,7 +30,9 @@ export function CategorySelect({
 				style={{ flex: 1, width: '100%' }}
 				keyExtractor={item => item.key}
 				renderItem={({ item }) => (
-					<S.Category onPress={() => setCategory(item)}>
+					<S.Category
+						isActive={category.key === item.key}
+						onPress={() => setCategory(item)}>
 						<S.Icon name={item.icon} />
 						<S.Name>{item.name}</S.Name>
 					</S.Category>
