@@ -64,7 +64,7 @@ export function Register() {
 	async function handleRegister(form: FormData | FieldValues) {
 		const { name, amount } = form
 
-		const data = {
+		const newTransaction = {
 			name,
 			amount,
 			transactionType,
@@ -72,7 +72,15 @@ export function Register() {
 		}
 
 		try {
-			await AsyncStorage.setItem(dataKey, JSON.stringify(data))
+			const data = await AsyncStorage.getItem(dataKey)
+			const currentData = data ? JSON.parse(data) : []
+
+			const dataFormatted = [
+				...currentData,
+				newTransaction
+			]
+
+			await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
 		} catch (err) {
 			Alert.alert('Não foi possível cadastrar')
 		}
