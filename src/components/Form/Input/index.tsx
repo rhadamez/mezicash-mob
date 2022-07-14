@@ -4,8 +4,8 @@ import * as S from './styles'
 
 type Props = TextInputProps
 
-export function Input({...rest}: Props) {
+export function Input({ ...rest }: Props) {
 	return (
-		<S.Container {...rest}/>
+		<S.Container {...rest} />
 	)
 }

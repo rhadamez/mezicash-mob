@@ -19,6 +19,7 @@ export const Header = styled.View`
 `
 
 export const TransactionTypes = styled.View`
+	margin: 8px 0 16px;
 	flex-direction: row;
 	justify-content: space-between;
 `
