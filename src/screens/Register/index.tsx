@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Modal } from 'react-native'
 
 import { useForm, FieldValues } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import { Button } from '../../components/Form/Button'
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton'
@@ -26,7 +28,14 @@ export function Register() {
 		name: 'Categoria'
 	})
 
-	const { control, handleSubmit, formState: { errors } } = useForm()
+	const schemaValidation = yup.object({
+		name: yup.string().required('Nome é obrigatório'),
+		amount: yup.number().typeError('Preço deve ser numérico').required('Preço é obrigatório'),
+	}).required()
+
+	const { control, handleSubmit, formState: { errors } } = useForm({
+		resolver: yupResolver(schemaValidation)
+	})
 
 	function handleTransactionTypeSelect(type: TransactionType) {
 		setTransactionType(type)
@@ -52,8 +61,19 @@ export function Register() {
 
 			<S.Form>
 				<S.Fields>
-					<InputForm name='nome' control={control} placeholder='Nome' />
-					<InputForm name='amount' control={control} placeholder='Preço' />
+					<InputForm
+						name='nome'
+						control={control}
+						error={errors.name?.message}
+						autoCapitalize='sentences'
+						autoCorrect={false}
+						placeholder='Nome' />
+					<InputForm
+						name='amount'
+						control={control}
+						error={errors.amount?.message}
+						placeholder='Preço'
+						keyboardType='numeric' />
 					<S.TransactionTypes>
 						<TransactionTypeButton
 							title='Income'

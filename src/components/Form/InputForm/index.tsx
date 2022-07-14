@@ -7,16 +7,18 @@ import * as S from './styles'
 interface Props extends TextInputProps {
 	control: Control
 	name: string
+	error?: any
 }
 
-export function InputForm({ control, name, ...rest }: Props) {
+export function InputForm({ control, name, error, ...rest }: Props) {
 	return (
 		<S.Container>
+			{error && <S.ErrorLabel>{error}</S.ErrorLabel>}
 			<Controller
 				name={name}
 				control={control}
 				render={({ field: { onChange, value } }) => (
-					<Input onChangeText={onChange} value={value} {...rest} />
+					<Input onChangeText={onChange} value={value} hasError={!!error} {...rest} />
 				)} />
 		</S.Container>
 	)
