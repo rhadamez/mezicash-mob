@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ThemeProvider } from 'styled-components'
 import * as Font from 'expo-font'
@@ -11,7 +12,7 @@ import {
 } from '@expo-google-fonts/poppins'
 
 import theme from './src/global/styles/theme'
-import { Register } from './src/screens/Register'
+import { Routers } from './src/routes'
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
@@ -39,7 +40,9 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<GestureHandlerRootView style={{ flex: 1 }}>
-				<Register />
+				<NavigationContainer>
+					<Routers />
+				</NavigationContainer>
 			</GestureHandlerRootView>
 		</ThemeProvider>
 	)
