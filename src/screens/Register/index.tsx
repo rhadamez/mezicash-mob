@@ -1,5 +1,7 @@
-import { useState } from 'react'
-import { Modal } from 'react-native'
+import { useState, useEffect } from 'react'
+import { Alert, Modal } from 'react-native'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useForm, FieldValues } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -20,6 +22,7 @@ interface FormData {
 }
 
 export function Register() {
+	const dataKey = '@mezicash:transactions'
 	const [categoryModalOpen, setCategoryModalOpen] = useState(false)
 	const [transactionType, setTransactionType] = useState<TransactionType>()
 
@@ -37,6 +40,15 @@ export function Register() {
 		resolver: yupResolver(schemaValidation)
 	})
 
+	useEffect(() => {
+		async function loadData() {
+			const data = await AsyncStorage.getItem(dataKey)
+			console.log(data)
+		}
+
+		loadData()
+	}, [])
+
 	function handleTransactionTypeSelect(type: TransactionType) {
 		setTransactionType(type)
 	}
@@ -49,8 +61,21 @@ export function Register() {
 		setCategoryModalOpen(false)
 	}
 
-	function handleRegister(form: FormData | FieldValues) {
-		console.log(form)
+	async function handleRegister(form: FormData | FieldValues) {
+		const { name, amount } = form
+
+		const data = {
+			name,
+			amount,
+			transactionType,
+			category: category.key
+		}
+
+		try {
+			await AsyncStorage.setItem(dataKey, JSON.stringify(data))
+		} catch (err) {
+			Alert.alert('Não foi possível cadastrar')
+		}
 	}
 
 	return (
