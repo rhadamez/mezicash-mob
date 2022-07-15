@@ -1,3 +1,9 @@
+import { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import { format } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionProps } from '../../components/TransactionCard'
 import * as S from './styles'
@@ -7,41 +13,27 @@ export interface DataListProps extends TransactionProps {
 }
 
 export function Dashboard() {
-	const data: DataListProps[] = [
-		{
-			id: 1,
-			type: 'positive',
-			title: 'Desenvolvimento de site',
-			amount: 'R$ 4.000,00',
-			date: '14/04/2020',
-			category: {
-				name: 'Vendas',
-				icon: 'dollar-sign'
-			}
-		},
-		{
-			id: 2,
-			type: 'negative',
-			title: 'Pizza grande',
-			amount: 'R$ 85,00',
-			date: '07/05/2020',
-			category: {
-				name: 'Compras',
-				icon: 'coffee'
-			}
-		},
-		{
-			id: 3,
-			type: 'negative',
-			title: 'Aluguel do apartamento',
-			amount: 'R$ 1.000,00',
-			date: '14/04/2020',
-			category: {
-				name: 'Casa',
-				icon: 'shopping-bag'
-			}
+	const [data, setData] = useState<DataListProps[]>([])
+
+	useEffect(() => {
+		async function loadTransactions() {
+			const dataKey = '@mezicash:transactions'
+			const response = await AsyncStorage.getItem(dataKey)
+
+			const transactions = response ? JSON.parse(response) : []
+			const transactionsFormatted = transactions.map((t: DataListProps) => {
+				const amount = Number(t.amount)
+					.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+				const date = format(new Date(t.date), 'dd/MM/yyyy', { locale: ptBR })
+				return { ...t, date, amount }
+			})
+
+			console.log(transactionsFormatted)
+			setData(transactionsFormatted)
 		}
-	]
+
+		loadTransactions()
+	}, [])
 
 	return (
 		<S.Container>
@@ -63,7 +55,7 @@ export function Dashboard() {
 				<HighlightCard
 					type='up'
 					title='Entradas'
-					amount='R$ 49.400,00'
+					amount='R$ 62.425,00'
 					lastTransaction='Última entrada dia 13 de abril' />
 				<HighlightCard
 					type='down'
@@ -78,13 +70,13 @@ export function Dashboard() {
 			</S.HightlightCards>
 			<S.Transactions>
 				<S.Title>Listagem</S.Title>
+				{data.length === 0 && <S.ListEmpty>Não há dados</S.ListEmpty>}
 				<S.TransactionList
 					data={data}
 					keyExtractor={item => item.id.toString()}
 					renderItem={({ item }: { item: DataListProps }) => (
 						<TransactionCard data={item} />
 					)}
-
 				/>
 			</S.Transactions>
 		</S.Container>

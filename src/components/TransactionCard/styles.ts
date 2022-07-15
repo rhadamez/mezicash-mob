@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components/native'
+import styled from 'styled-components/native'
 
 import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 
 interface TypeProps {
-	type: 'positive' | 'negative'
+	type: 'up' | 'down'
 }
 
 export const Container = styled.View`
@@ -12,19 +12,19 @@ export const Container = styled.View`
 	margin-bottom: 16px;
 
 	border-radius: 5px;
-	background: ${({theme}) => theme.colors.shape};
+	background: ${({ theme }) => theme.colors.shape};
 `
 
 export const Title = styled.Text`
 	font-size: ${RFValue(14)}px;
-	font-family: ${({theme}) => theme.fonts.regular};
+	font-family: ${({ theme }) => theme.fonts.regular};
 `
 
 export const Amount = styled.Text<TypeProps>`
 	margin-top: 2px;
 	font-size: ${RFValue(20)}px;
-	font-family: ${({theme}) => theme.fonts.regular};
-	color: ${({ theme, type }) => type === 'negative' ? theme.colors.attention : theme.colors.success};
+	font-family: ${({ theme }) => theme.fonts.regular};
+	color: ${({ theme, type }) => type === 'down' ? theme.colors.attention : theme.colors.success};
 `
 
 export const Footer = styled.View`
@@ -42,17 +42,17 @@ export const Category = styled.View`
 
 export const Icon = styled<any>(Feather)`
 	font-size: ${RFValue(20)}px;
-	color: ${({theme}) => theme.colors.secondary};
+	color: ${({ theme }) => theme.colors.secondary};
 ` as any
 
 export const CategoryName = styled.Text`
 	margin-left: 17px;
 
 	font-size: ${RFValue(14)}px;
-	color: ${({theme}) => theme.colors.secondary};
+	color: ${({ theme }) => theme.colors.secondary};
 `
 
 export const Date = styled.Text`
 	font-size: ${RFValue(14)}px;
-	color: ${({theme}) => theme.colors.text};
+	color: ${({ theme }) => theme.colors.text};
 `

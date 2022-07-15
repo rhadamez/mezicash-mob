@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
+import 'intl'
+import 'intl/locale-data/jsonp/pt-BR'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ThemeProvider } from 'styled-components'
 import * as Font from 'expo-font'

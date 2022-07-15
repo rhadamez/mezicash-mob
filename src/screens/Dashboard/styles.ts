@@ -99,3 +99,10 @@ export const TransactionList = styled(
 	showsVerticalScrollIndicator: false,
 	contentContainerStyle: { paddingBottom: getBottomSpace() }
 })``
+
+export const ListEmpty = styled.Text`
+	margin-bottom: 16px;
+
+	font-family: ${({ theme }) => theme.fonts.regular};
+	font-size: ${RFValue(13)}px;
+`

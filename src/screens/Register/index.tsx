@@ -73,7 +73,7 @@ export function Register() {
 			id: String(uuid.v4()),
 			name,
 			amount,
-			transactionType,
+			type: transactionType,
 			category: category.key,
 			date: new Date()
 		}

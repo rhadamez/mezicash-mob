@@ -1,15 +1,11 @@
+import { categories } from '../../utils/categories'
 import * as S from './styles'
 
-interface CategoryProps {
-	name: string
-	icon: string
-}
-
 export interface TransactionProps {
-	type: 'positive' | 'negative'
-	title: string
+	type: 'up' | 'down'
+	name: string
 	amount: string
-	category: CategoryProps
+	category: string
 	date: string
 }
 
@@ -18,14 +14,16 @@ interface TransactionCardProps {
 }
 
 export function TransactionCard({ data }: TransactionCardProps) {
-	return(
+	const category = categories.find(c => c.key === data.category)
+
+	return (
 		<S.Container>
-			<S.Title>{data.title}</S.Title>
-			<S.Amount type={data.type}>{data.type === 'negative' && '- '}{data.amount}</S.Amount>
+			<S.Title>{data.name}bah: {data.type}</S.Title>
+			<S.Amount type={data.type}>{data.type === 'down' && '- '}{data.amount}</S.Amount>
 			<S.Footer>
 				<S.Category>
-					<S.Icon name={data.category.icon}/>
-					<S.CategoryName>{data.category.name}</S.CategoryName>
+					<S.Icon name={category?.icon} color={category?.color} />
+					<S.CategoryName>{category?.name}</S.CategoryName>
 				</S.Category>
 				<S.Date>{data.date}</S.Date>
 			</S.Footer>
