@@ -3,6 +3,10 @@ import { Alert, Modal } from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { useNavigation } from '@react-navigation/native'
+
+import uuid from 'react-native-uuid'
+
 import { useForm, FieldValues } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -22,6 +26,7 @@ interface FormData {
 }
 
 export function Register() {
+	const navigation = useNavigation()
 	const dataKey = '@mezicash:transactions'
 	const [categoryModalOpen, setCategoryModalOpen] = useState(false)
 	const [transactionType, setTransactionType] = useState<TransactionType>()
@@ -36,7 +41,7 @@ export function Register() {
 		amount: yup.number().typeError('Preço deve ser numérico').required('Preço é obrigatório'),
 	}).required()
 
-	const { control, handleSubmit, formState: { errors } } = useForm({
+	const { control, handleSubmit, reset, formState: { errors } } = useForm({
 		resolver: yupResolver(schemaValidation)
 	})
 
@@ -65,10 +70,12 @@ export function Register() {
 		const { name, amount } = form
 
 		const newTransaction = {
+			id: String(uuid.v4()),
 			name,
 			amount,
 			transactionType,
-			category: category.key
+			category: category.key,
+			date: new Date()
 		}
 
 		try {
@@ -81,6 +88,10 @@ export function Register() {
 			]
 
 			await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+			reset()
+			setTransactionType(undefined)
+			setCategory({ key: 'categoria', name: 'Categoria' })
+			navigation.navigate('Listagem')
 		} catch (err) {
 			Alert.alert('Não foi possível cadastrar')
 		}
