@@ -18,7 +18,7 @@ export function TransactionCard({ data }: TransactionCardProps) {
 
 	return (
 		<S.Container>
-			<S.Title>{data.name}bah: {data.type}</S.Title>
+			<S.Title>{data.name}</S.Title>
 			<S.Amount type={data.type}>{data.type === 'down' && '- '}{data.amount}</S.Amount>
 			<S.Footer>
 				<S.Category>

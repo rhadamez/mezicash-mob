@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { format } from 'date-fns'
@@ -15,7 +16,7 @@ export interface DataListProps extends TransactionProps {
 export function Dashboard() {
 	const [data, setData] = useState<DataListProps[]>([])
 
-	useEffect(() => {
+	useFocusEffect(useCallback(() => {
 		async function loadTransactions() {
 			const dataKey = '@mezicash:transactions'
 			const response = await AsyncStorage.getItem(dataKey)
@@ -27,13 +28,11 @@ export function Dashboard() {
 				const date = format(new Date(t.date), 'dd/MM/yyyy', { locale: ptBR })
 				return { ...t, date, amount }
 			})
-
-			console.log(transactionsFormatted)
 			setData(transactionsFormatted)
 		}
 
 		loadTransactions()
-	}, [])
+	}, []))
 
 	return (
 		<S.Container>
