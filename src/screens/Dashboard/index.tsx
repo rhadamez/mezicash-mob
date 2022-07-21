@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -8,6 +9,7 @@ import ptBR from 'date-fns/locale/pt-BR'
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionProps } from '../../components/TransactionCard'
 import * as S from './styles'
+import { useTheme } from 'styled-components'
 
 export interface DataListProps extends TransactionProps {
 	id: number
@@ -24,8 +26,14 @@ interface HighlightData {
 }
 
 export function Dashboard() {
+	const theme = useTheme()
+	const [isLoading, setIsLoading] = useState(true)
 	const [transactions, setTransactions] = useState<DataListProps[]>([])
-	const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
+	const [highlightData, setHighlightData] = useState<HighlightData>({
+		entries: { total: '0' },
+		expensives: { total: '0' },
+		total: '',
+	})
 
 	useFocusEffect(useCallback(() => {
 		async function loadTransactions() {
@@ -54,6 +62,8 @@ export function Dashboard() {
 				expensives: { total: expensiveTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) },
 				total: (entriesTotal - expensiveTotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 			})
+
+			setIsLoading(false)
 		}
 
 		loadTransactions()
@@ -61,48 +71,54 @@ export function Dashboard() {
 
 	return (
 		<S.Container>
-			<S.Header>
-				<S.UserWrapper>
-					<S.UserInfo>
-						<S.Photo source={{ uri: 'https://github.com/rhadamez.png' }} />
-						<S.User>
-							<S.UserGreeting>Olá, </S.UserGreeting>
-							<S.UserName>Rhadamez</S.UserName>
-						</S.User>
-					</S.UserInfo>
-					<S.LogoutButton>
-						<S.Icon name='power' size={24} />
-					</S.LogoutButton>
-				</S.UserWrapper>
-			</S.Header>
-			<S.HightlightCards>
-				<HighlightCard
-					type='up'
-					title='Entradas'
-					amount={highlightData.entries.total}
-					lastTransaction='Última entrada dia 13 de abril' />
-				<HighlightCard
-					type='down'
-					title='Saídas'
-					amount={highlightData.expensives.total}
-					lastTransaction='Última entrada dia 06 de junho' />
-				<HighlightCard
-					type='total'
-					title='Total'
-					amount={highlightData.total}
-					lastTransaction='de 01 de abril à 06 de junho' />
-			</S.HightlightCards>
-			<S.Transactions>
-				<S.Title>Listagem</S.Title>
-				{transactions.length === 0 && <S.ListEmpty>Não há dados</S.ListEmpty>}
-				<S.TransactionList
-					data={transactions}
-					keyExtractor={item => item.id.toString()}
-					renderItem={({ item }: { item: DataListProps }) => (
-						<TransactionCard data={item} />
-					)}
-				/>
-			</S.Transactions>
+			{isLoading ? (
+				<ActivityIndicator style={{ flex: 1 }} size={'large'} color={theme.colors.primary}/>
+			) : (
+				<>
+					<S.Header>
+						<S.UserWrapper>
+							<S.UserInfo>
+								<S.Photo source={{ uri: 'https://github.com/rhadamez.png' }} />
+								<S.User>
+									<S.UserGreeting>Olá, </S.UserGreeting>
+									<S.UserName>Rhadamez</S.UserName>
+								</S.User>
+							</S.UserInfo>
+							<S.LogoutButton>
+								<S.Icon name='power' size={24} />
+							</S.LogoutButton>
+						</S.UserWrapper>
+					</S.Header>
+					<S.HightlightCards>
+						<HighlightCard
+							type='up'
+							title='Entradas'
+							amount={highlightData.entries.total}
+							lastTransaction='Última entrada dia 13 de abril' />
+						<HighlightCard
+							type='down'
+							title='Saídas'
+							amount={highlightData.expensives.total}
+							lastTransaction='Última entrada dia 06 de junho' />
+						<HighlightCard
+							type='total'
+							title='Total'
+							amount={highlightData.total}
+							lastTransaction='de 01 de abril à 06 de junho' />
+					</S.HightlightCards>
+					<S.Transactions>
+						<S.Title>Listagem</S.Title>
+						{transactions.length === 0 && <S.ListEmpty>Não há dados</S.ListEmpty>}
+						<S.TransactionList
+							data={transactions}
+							keyExtractor={item => item.id.toString()}
+							renderItem={({ item }: { item: DataListProps }) => (
+								<TransactionCard data={item} />
+							)}
+						/>
+					</S.Transactions>
+				</>
+			)}
 		</S.Container>
 	)
 }
