@@ -13,22 +13,47 @@ export interface DataListProps extends TransactionProps {
 	id: number
 }
 
+interface HighlightProps {
+	total: string
+}
+
+interface HighlightData {
+	entries: HighlightProps
+	expensives: HighlightProps
+	total: string
+}
+
 export function Dashboard() {
-	const [data, setData] = useState<DataListProps[]>([])
+	const [transactions, setTransactions] = useState<DataListProps[]>([])
+	const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
 
 	useFocusEffect(useCallback(() => {
 		async function loadTransactions() {
 			const dataKey = '@mezicash:transactions'
 			const response = await AsyncStorage.getItem(dataKey)
 
+			let entriesTotal = 0
+			let expensiveTotal = 0
+
 			const transactions = response ? JSON.parse(response) : []
 			const transactionsFormatted = transactions.map((t: DataListProps) => {
-				const amount = Number(t.amount)
-					.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+
+				if(t.type === 'up') {
+					entriesTotal += Number(t.amount)
+				} else {
+					expensiveTotal += Number(t.amount)
+				}
+
+				const amount = Number(t.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 				const date = format(new Date(t.date), 'dd/MM/yyyy', { locale: ptBR })
 				return { ...t, date, amount }
 			})
-			setData(transactionsFormatted)
+			setTransactions(transactionsFormatted)
+			setHighlightData({
+				entries: { total: entriesTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) },
+				expensives: { total: expensiveTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) },
+				total: (entriesTotal - expensiveTotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+			})
 		}
 
 		loadTransactions()
@@ -54,24 +79,24 @@ export function Dashboard() {
 				<HighlightCard
 					type='up'
 					title='Entradas'
-					amount='R$ 62.425,00'
+					amount={highlightData.entries.total}
 					lastTransaction='Última entrada dia 13 de abril' />
 				<HighlightCard
 					type='down'
 					title='Saídas'
-					amount='R$ 12.000,00'
+					amount={highlightData.expensives.total}
 					lastTransaction='Última entrada dia 06 de junho' />
 				<HighlightCard
 					type='total'
 					title='Total'
-					amount='R$ 37.400,00'
+					amount={highlightData.total}
 					lastTransaction='de 01 de abril à 06 de junho' />
 			</S.HightlightCards>
 			<S.Transactions>
 				<S.Title>Listagem</S.Title>
-				{data.length === 0 && <S.ListEmpty>Não há dados</S.ListEmpty>}
+				{transactions.length === 0 && <S.ListEmpty>Não há dados</S.ListEmpty>}
 				<S.TransactionList
-					data={data}
+					data={transactions}
 					keyExtractor={item => item.id.toString()}
 					renderItem={({ item }: { item: DataListProps }) => (
 						<TransactionCard data={item} />
