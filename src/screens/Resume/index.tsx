@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+
 import { VictoryPie } from 'victory-native'
 
 import { History } from '../../components/History'
@@ -83,8 +85,24 @@ export function Resume() {
 				<S.Title>Resumo</S.Title>
 			</S.Header>
 
-			<S.Content>
+			<S.Content 
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{
+					paddingBottom: useBottomTabBarHeight()
+				}} >
 				<S.ChartContainer>
+
+					<S.MonthSelect>
+						<S.MonthSelectButton>
+							<S.SelectIcon name='chevron-left' size={25} />
+						</S.MonthSelectButton>
+
+						<S.Month>Maio</S.Month>
+
+						<S.MonthSelectButton>
+							<S.SelectIcon name='chevron-right' size={25} />
+						</S.MonthSelectButton>
+					</S.MonthSelect>
 					<VictoryPie
 						data={totalCategories}
 						colorScale={totalCategories.map(category => category.color)}
@@ -99,6 +117,7 @@ export function Resume() {
 						x='percent'
 						y='amount'
 					/>
+
 				</S.ChartContainer>
 				<S.Histories>
 					{totalCategories.map(c => (

@@ -1,6 +1,8 @@
 import styled from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+import { BorderlessButton } from 'react-native-gesture-handler'
+import { Feather } from '@expo/vector-icons'
 
 export const Container = styled.View`
 	flex: 1;
@@ -34,3 +36,26 @@ export const Title = styled.Text`
 export const Histories = styled.View`
 	margin: 40px 20px;
 `
+
+export const MonthSelect = styled.View`
+	width: 50%;
+	margin-top: 24px;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+`
+
+export const MonthSelectButton = styled<any>(BorderlessButton)`
+	height: 30px;
+	width: 30px;
+	justify-content: center;
+	align-items: center;
+`
+
+export const SelectIcon = styled(Feather)``
+
+export const Month = styled.Text`
+	font-family: ${({ theme }) => theme.fonts.regular};
+	font-size: ${RFValue(24)}px;
+`
+
