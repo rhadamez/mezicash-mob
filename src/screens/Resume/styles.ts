@@ -18,6 +18,8 @@ export const Header = styled.View`
 	background-color: ${({ theme }) => theme.colors.primary};
 `
 
+export const Content = styled.ScrollView``
+
 export const Title = styled.Text`
 	font-size: ${RFValue(18)}px;
 
