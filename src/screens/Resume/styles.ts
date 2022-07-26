@@ -20,6 +20,10 @@ export const Header = styled.View`
 
 export const Content = styled.ScrollView``
 
+export const ChartContainer = styled.View`
+	align-items: center;
+`
+
 export const Title = styled.Text`
 	font-size: ${RFValue(18)}px;
 
