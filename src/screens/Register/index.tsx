@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Alert, Modal } from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -44,15 +44,6 @@ export function Register() {
 	const { control, handleSubmit, reset, formState: { errors } } = useForm({
 		resolver: yupResolver(schemaValidation)
 	})
-
-	useEffect(() => {
-		async function loadData() {
-			const data = await AsyncStorage.getItem(dataKey)
-			console.log(data)
-		}
-
-		loadData()
-	}, [])
 
 	function handleTransactionTypeSelect(type: TransactionType) {
 		setTransactionType(type)
