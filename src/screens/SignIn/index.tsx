@@ -6,6 +6,7 @@ import { Logo } from '../../components/Svgs/Logo'
 import * as S from './styles'
 
 export function SignIn() {
+	
 	return (
 		<S.Container>
 			<S.Header>
