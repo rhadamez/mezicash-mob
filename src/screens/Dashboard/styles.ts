@@ -32,7 +32,6 @@ export const UserWrapper = styled.View`
 `
 
 export const UserInfo = styled.View`
-
 	flex-direction: row;
 	align-items: center;
 `
@@ -77,12 +76,12 @@ export const HightlightCards = styled.ScrollView.attrs({
 })`
 	width: 100%;
 	position: absolute;
-	margin-top: ${RFPercentage(20)}px;
+	margin-top: ${RFPercentage(22)}px;
 `
 
 export const Transactions = styled.View`
 	flex: 1;
-	margin-top: ${RFPercentage(12)}px;
+	margin-top: ${RFPercentage(15)}px;
 	padding: 0 24px;
 `
 

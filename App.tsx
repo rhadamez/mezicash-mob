@@ -15,6 +15,7 @@ import {
 
 import theme from './src/global/styles/theme'
 import { Routers } from './src/routes'
+import { SignIn } from './src/screens/SignIn'
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
@@ -44,7 +45,7 @@ export default function App() {
 			<GestureHandlerRootView style={{ flex: 1 }}>
 				<NavigationContainer>
 					<StatusBar barStyle={'light-content'} backgroundColor='transparent' translucent/>
-					<Routers />
+					<SignIn />
 				</NavigationContainer>
 			</GestureHandlerRootView>
 		</ThemeProvider>
