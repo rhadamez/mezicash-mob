@@ -38,10 +38,10 @@ export const Histories = styled.View`
 `
 
 export const MonthSelect = styled.View`
-	width: 50%;
+	width: 100%;
 	margin-top: 24px;
 	flex-direction: row;
-	justify-content: space-evenly;
+	justify-content: space-around;
 	align-items: center;
 `
 

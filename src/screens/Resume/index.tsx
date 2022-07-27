@@ -11,6 +11,8 @@ import { categories } from '../../utils/categories'
 import * as S from './styles'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useTheme } from 'styled-components'
+import { addMonths, format, subMonths } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 interface TransactionData {
 	type: 'up' | 'down'
@@ -31,17 +33,31 @@ interface CategorieFilledProps {
 export function Resume() {
 	const theme = useTheme()
 	const [totalCategories, setTotalCategories] = useState<CategorieFilledProps[]>([])
+	const [selectedDate, setSelectedDate] = useState(new Date())
 
 	useEffect(() => {
 		loadData()
-	}, [])
+	}, [selectedDate])
+
+	function handleDateChange(action: 'next' | 'prev') {
+		if(action === 'next') {
+			setSelectedDate(addMonths(selectedDate, 1))
+		} else {
+			setSelectedDate(subMonths(selectedDate, 1))
+		}
+	}
 
 	async function loadData() {
 		const dataKey = '@mezicash:transactions'
 		const response = await AsyncStorage.getItem(dataKey)
 		const responseFormatted = response ? JSON.parse(response) : []
 
-		const expensives = responseFormatted.filter((expensive: TransactionData) => expensive.type === 'down') as TransactionData[]
+		const expensives = responseFormatted.filter((expensive: TransactionData) => {
+			const isType = expensive.type === 'down'
+			const currentSelectedDate = format(selectedDate, 'MM-yy')
+			const currentExpensiveDate = format(new Date(expensive.date), 'MM-yy')
+			return isType && currentSelectedDate === currentExpensiveDate
+		}) as TransactionData[]
 
 		const expensiveTotal = expensives.reduce((acumullator: number, expensive: TransactionData) => {
 			return acumullator + Number(expensive.amount)
@@ -93,13 +109,13 @@ export function Resume() {
 				<S.ChartContainer>
 
 					<S.MonthSelect>
-						<S.MonthSelectButton>
+						<S.MonthSelectButton onPress={() => handleDateChange('prev')}>
 							<S.SelectIcon name='chevron-left' size={25} />
 						</S.MonthSelectButton>
 
-						<S.Month>Maio</S.Month>
+						<S.Month>{format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}</S.Month>
 
-						<S.MonthSelectButton>
+						<S.MonthSelectButton onPress={() => handleDateChange('next')}>
 							<S.SelectIcon name='chevron-right' size={25} />
 						</S.MonthSelectButton>
 					</S.MonthSelect>
