@@ -1,7 +1,9 @@
 {
   "expo": {
     "name": "mezicash-mob",
+		"owner": "rhadamez",
     "slug": "mezicash-mob",
+		"schema": "mezicash-mob",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
