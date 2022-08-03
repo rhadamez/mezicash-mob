@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StatusBar } from 'react-native'
+import * as Sentry from '@sentry/react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-BR'
@@ -17,6 +18,11 @@ import theme from './src/global/styles/theme'
 import { Routers } from './src/routes'
 import { SignIn } from './src/screens/SignIn'
 import { AuthProvider } from './src/store/AuthContext'
+
+Sentry.init({
+	dsn: 'https://cccdb5f8f681401bbd7e4303b6f1d236@o333848.ingest.sentry.io/6620652',
+	tracesSampleRate: 1.0,
+})
 
 export default function App() {
 	const [appIsReady, setAppIsReady] = useState(false)
